@@ -1,0 +1,25 @@
+#!/bin/bash
+
+function emclient() {
+    local termtype
+    {
+	termtype=$(emacsclient -e "(framep (selected-frame))" 2>/dev/null) &&
+	    case $termtype in
+		x)
+		    if [[ -n $@ ]]; then
+			execCmd=emacsclient
+		    fi
+		    ;;
+		t)
+		    execCmd="emacsclient -c"
+		    ;;
+	    esac
+    } || {
+	emacs --daemon 2> /dev/null
+	execCmd="emacsclient -c"
+    }
+}
+
+emclient
+exec $execCmd "$@" 2> /dev/null
+
