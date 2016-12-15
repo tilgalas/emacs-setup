@@ -6,9 +6,7 @@ function emclient() {
 	termtype=$(emacsclient -e "(framep (selected-frame))" 2>/dev/null) &&
 	    case $termtype in
 		x)
-		    if [[ -n $@ ]]; then
-			execCmd=emacsclient
-		    fi
+		    execCmd=emacsclient
 		    ;;
 		t)
 		    execCmd="emacsclient -c"
